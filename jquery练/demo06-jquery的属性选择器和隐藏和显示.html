@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <p>世上再无张显宗,无人爱我岳琦罗</p>
+    <p style="display: none;">世上再无李云龙,无缘轰我李秀芹  横批: 老李! 开炮 </p>
+    <input type="button" name="show" value="点我显示(开炮)"/>
+    <input type="button" name="hidd" value="点我隐藏" />
+
+    <script>
+        $(function() {
+            $("input[name='show']").click(function() {
+                //选中隐藏的标签，让其显现出来
+               // $('p:hidden').show();
+                $('p+p:hidden').show();
+            })
+
+            $("input[name='hidd']").click(function() {
+                //选中显示的标签，让其隐藏起来
+                
+                //$("p:eq(1):visible").hide();//隐藏下面的上面的一行显现出来
+                $("p+p:visible").hide();
+            })
+
+
+        })
+    </script>
+</body>
+</html>

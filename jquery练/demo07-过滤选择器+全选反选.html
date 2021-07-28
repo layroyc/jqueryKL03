@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td><input type="checkbox" value="1"></td>
+            <td>豹女</td>
+            <td>300</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="2"></td>
+            <td>龙女</td>
+            <td>300</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="3"></td>
+            <td>提摩</td>
+            <td>320</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="4"></td>
+            <td>琴女</td>
+            <td>350</td>
+        </tr>
+    </table>
+    <input type="button" value="点击选择第几个" id="eqBtn">
+    <input type="button" value="点击选择第1个first" id="firstBtn">
+    <input type="button" value="点击选择最后1个last" id="lastBtn">
+    <input type="button" value="点击选择全部 用于批量删除" id="allBtn">
+    <input type="button" value="查看已经选中的" id="checkedBtn">
+    <input type="button" value="查看未选中的" id="noCheckedBtn">
+    <input type="button" value="全不部" id="allNotBtn">
+    <input type="button" value="反部" id="overBtn">
+    <input type="button" value="反部升级版" id="overBtn1">
+    <!-- 使用eq() -->
+
+    <script>
+        $(function() {
+            //jquery 使用过滤选择器  达到 奇偶数变色    jquery操作css
+            $(" table tr:even").css('background', 'pink');
+            $(" table tr:odd").css('background', 'yellow');
+
+            $("#eqBtn").click(function() {
+                //拿去指定的值
+                //拿到 提莫的值
+                var timo = $("table tr:eq(2) td:eq(1)").html();
+                console.log(timo);
+            })
+
+            //拿取 第一个
+            $("#firstBtn").click(function() {
+                var first = $('table tr:first').html();
+                console.log(first);
+            })
+
+
+
+            //拿取 最后1个
+            $("#lastBtn").click(function() {
+                var last = $('table tr:last').text();
+                console.log(last);
+            })
+
+            //包含提摩的变色
+            $("table tr:contains('提摩')").css("background","red")
+
+            //全选
+            $("#allBtn").click(function() {
+                 //$('table input').attr('checked',true)
+                 //思路：找出所有 CheckBox的 td 遍历，让其选中即可
+                 //$('table tr td>input')
+
+                 $.each($('table tr td>input'), function(index, value) {
+                     //console.log(index);
+                     //console.log(value);
+                     //console.log($(this)).val();    //遍历取值
+                     $(this).prop('checked',true);  //全选
+                 })
+                
+            })
+
+            //已经被选中
+            $("#checkedBtn").click(function() {
+                //使用 过滤选择器  可以选中：
+                
+                $.each($('table tr td>input:checked'), function(index, value) {
+                     //console.log(index);
+                     //console.log(value);
+                     console.log($(this)).val();    //遍历取值
+                    
+                 })
+            })
+
+            //未被选中
+            $("#noCheckedBtn").click(function() {
+               console.log( $('table tr td>input:not(:checked)'))
+            })
+
+    
+            //全不选
+            $("#allNotBtn").click(function() {
+                
+                 $.each($('table tr td>input'), function(index, value) {
+                     $(this).prop('checked',false);  //全不选
+                 })
+            })
+            //反选
+            
+            $("#overBtn").click(function(){
+				$.each($("table tr td>input"), function(index, value) {
+                    // if($(this).prop("checked")){
+					// 	$(this).prop("checked",false);
+					// }else{
+					// 	$(this).prop("checked",true);
+					// }
+                    var isTrue = $(this).prop("checked");
+                    console.log(isTrue)
+                    if(isTrue){
+					    $(this).prop("checked",false);
+					}else{
+						$(this).prop("checked",true);
+					}
+                })
+			});
+
+            //升级版  反选
+            //点击查询 没有选中
+            $("#overBtn1").click(function() {
+                $.each($("table tr td>input"), function(index, value) {
+                    $(this).prop("checked",!( $(this).prop("checked")))
+                })
+            })
+
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.js"></script>
+    <style type="text/css">
+        select {
+            width: 200px;
+            height: 200px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <select id="leftSelect" multiple="multiple">
+                    multiple 属性规定可同时选择多个选项
+                    <option>登录</option>
+                    <option>员工管理</option>
+                    <option>部门管理</option>
+                    <option>订单管理</option>
+                </select>
+            </td>
+            <td>
+                <input type="button" value=">" onclick="rightMove()"><br>
+                <input type="button" value=">>" onclick="rightMoveAll()"><br>
+                <input type="button" value="&lt" onclick="leftMove()"><br>
+                <input type="button" value="&lt&lt" onclick="leftMoveAll()">
+            </td>
+            <td>
+                <select id="rightSelect" multiple="multiple">
+
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        //选中向右走一个，如何判断 被选中， checked   selected 被选中
+        function rightMove(){
+            var leftSelectDom = $("#leftSelect option");
+            $.each(leftSelectDom, function(index, value) {
+                //是否被选中
+                var isSelected = $(this).prop('selected');
+                //把被选中追加到右边
+                if(isSelected){
+                    $(this).appendTo("#rightSelect");
+                }
+            })
+        }
+
+        //从左边到右边全部过去
+        function rightMoveAll(){
+            var leftSelectDom = $("#leftSelect option");
+            $.each(leftSelectDom, function(index, value) {
+                $(this).appendTo("#rightSelect");
+            })
+        }
+
+        //从右边   回到  左边
+        function leftMove(){
+            var rightSelectDom = $("#rightSelect option");
+            $.each(rightSelectDom, function(index, value) {
+                //是否被选中
+                var isSelected = $(this).prop('selected');
+                //把被选中追加到左边
+                if(isSelected){
+                    $(this).appendTo("#leftSelect");
+                }
+            })
+        }
+
+        //从右边到左边全部过去
+        function leftMoveAll(){
+            var rightSelectDom = $("#rightSelect option");
+            $.each(rightSelectDom, function(index, value) {
+                $(this).appendTo("#leftSelect");
+            })
+        }
+    </script>
+</body>
+
+</html>

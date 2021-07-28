@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.js"></script>
+    <style type="text/css">
+        table {
+            width: 800px;
+            border-collapse: collapse;
+
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+
+            <td>姓名：<input id="realName" name="realName" type="text"></td>
+            <td>年龄：<input id="age" name="age" type="text"></td>
+            <td>地址：<input id="address" name="address" type="text"></td>
+            <td><input value="添加" type="button" onclick="add()">
+                <input value="批量删除" type="button" onclick="delBatch()">
+            </td>
+        </tr>
+    </table>
+    <table border="1">
+        <thead>
+            <tr>
+                <td><input id="checkall" type="checkbox" onclick="checkAll(this)"></td>
+                <td>姓名</td>
+                <td>年龄</td>
+                <td>地址</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody id="mytb">
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>谢欣</td>
+                <td>30</td>
+                <td>郑州</td>
+                <td><a href="javascript:void(0)" onclick="del(this)">删除</a></td>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <script>
+        //添加
+        function add() {
+            //1、获取input中的3个值
+            var name = $("#realName").val();
+            var age = $("#age").val();
+            var address = $("#address").val();
+
+            //alert(name+age+address);
+            //2、添加到表格中  追加tr   //创建一个tr
+            var trs = $("<tr>" +
+                "<td><input type='checkbox' /></td>" +
+                "<td>" + name + "</td>" +
+                "<td>" + age + "</td>" +
+                "<td>" + address + "</td>" +
+                "<td><a href='javascript:void(0)' onclick='del(this)'>删除</a></td>"
+                + "</tr>");
+            $("#mytb").append(trs);
+        }
+
+        function del(obj) {
+            //删除tr    parents()返回元素的所有祖先元素  parent()  返回元素的直接父元素
+            console.log($(obj).parent().parent());
+            $(obj).parent().parent().remove();
+        }
+
+        //选中全部、反选
+        // function checkAll(obj) {
+        //     $("table tr td input").each(function (index, value) {
+        //         //$(this).prop('checked', true);  //全选
+        //         // if ($(this).prop("checked")) {
+        //         //     $(this).prop("checked", false);
+        //         // } else {
+        //         //     $(this).prop("checked", true);
+        //         // }
+        //         $(this).prop("checked",!( $(this).prop("checked")))
+        //     })
+        // }
+
+        //全选全不选
+        function checkAll(data){
+            var isTrue = $(data).prop('checked');
+            var checkBoxDom = $("table tr td input");
+            if(isTrue){
+                $.each(checkBoxDom, function(index, value) {
+                    $(this).prop('checked',true);
+                })
+            }else{
+                $.each(checkBoxDom, function(index, value) {
+                    $(this).prop('checked',false);
+                })
+            }
+        }
+
+        //批量删除
+        function delBatch() {
+            //对 列表中 CheckBox进行一个遍历 进行删除remove
+            //获取到所有选中的CheckBox
+            var ischk = $("#mytb tr td input:checked");
+            ischk.each(function () {
+                $(this).parent().parent().remove();
+            })
+            
+        }
+
+    </script>
+
+</body>
+
+</html>
